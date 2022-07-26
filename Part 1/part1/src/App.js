@@ -1,27 +1,45 @@
-const App = () => {
-  const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
+import { useState } from 'react'
 
-  return (
+const Button = (props) =>{
+  return(
+    <button onClick={props.onClick}>{props.text}</button>
+  )
+}
+
+const History = (props) =>{
+  if(props.allClicks.length === 0){
+    return(
+      <div>
+        The app is used by pressing buttons
+      </div>
+    )
+  }
+  return(
     <div>
-      <h1>{course}</h1>
-      <p>
-        {part1} {exercises1}
-      </p>
-      <p>
-        {part2} {exercises2}
-      </p>
-      <p>
-        {part3} {exercises3}
-      </p>
-      <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
+      button press History: {props.allClicks.join(' ')}
     </div>
   )
 }
 
+
+const App = () => {
+  const [value, setValue] = useState(10)
+
+  const hello = (who) => () => {
+    console.log('hello',who);
+  }
+
+  const setToValue = (newValue) =>{
+    setValue(newValue)
+  }
+
+  return (
+    <div>
+      {value}
+      <button onClick={() =>setToValue(1000)}>Thousand</button>
+      <button onClick={() =>setToValue(0)}>Zero</button>
+      <button onClick={() =>setToValue(value+1)}>Increment</button>
+    </div>
+  )
+}
 export default App

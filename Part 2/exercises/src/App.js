@@ -1,5 +1,8 @@
 import { useState } from 'react'
 
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
+import Persons from './components/Persons'
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
@@ -9,11 +12,15 @@ const App = () => {
   ]) 
   const [newName, setNewName] = useState('')
   const [newNumber,setNewNumber] = useState('')
+  const [searchWord, setSearchWord] = useState('')
   const handleNameChange = (event)=>{
     setNewName(event.target.value)
   }
   const handleNumberChange = (event) =>{
     setNewNumber(event.target.value)
+  }
+  const handleSearchWordChange = (event) => {
+    setSearchWord(event.target.value)
   }
   const handleFormSubmit = (event) =>{
     event.preventDefault()
@@ -32,23 +39,16 @@ const App = () => {
       window.alert(`${newName} is already added to phonebook`)
     }
   }
-  
+  const personsToShow = persons.filter(person => person.name.toLowerCase().indexOf(searchWord.toLocaleLowerCase()) !== -1)
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div>
-          name: <input value={newName} onChange = {handleNameChange}/>
-          <br/>
-          number: <input value={newNumber} onChange = {handleNumberChange}/>
-        </div>
-        <div>
-          <button type="submit" >add</button>
-        </div>
-      </form>
+      <Filter handleSearchWordChange={handleSearchWordChange}/>
+      <h2>Add a new </h2>
+      <PersonForm newName = {newName} newNumber = {newNumber} handleNameChange= {handleNameChange} handleNumberChange = {handleNumberChange} handleFormSubmit = {handleFormSubmit}/>
       <h2>Numbers</h2>
       
-      {persons.map(person => <p key={person.name}>{person.name}  {person.number}</p>)}
+      <Persons personsToShow={personsToShow}/>
     </div>
   )
 }

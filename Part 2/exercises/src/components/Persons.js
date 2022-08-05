@@ -1,6 +1,11 @@
 import React from "react"
 
-const Persons = ({personsToShow}) => personsToShow.map(person => <p key={person.name}>{person.name}  {person.number}</p>)
-
+const Persons = ({ personsToShow, handleDelete}) => {
+    return(
+        personsToShow.map(person =>
+         <p key={person.name}>{person.name}  {person.number} <button onClick={() =>handleDelete(person.id)}>delete</button></p>
+        )
+    )
+}
 
 export default Persons

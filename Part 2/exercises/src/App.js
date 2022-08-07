@@ -1,15 +1,16 @@
-import axios from 'axios'
 import { useState,useEffect } from 'react'
 
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import personService from './services/persons'
+import Notification from './components/Notification'
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [searchWord, setSearchWord] = useState('')
+  const [notification, setNotification] = useState('')
 
   const hook = () =>{
     personService
@@ -41,6 +42,9 @@ const App = () => {
       .create(newPerson)
       .then(returnedPerson => setPersons(persons.concat(returnedPerson)))
       
+      setNotification(`Added ${newName}`)
+
+      setTimeout(()=>setNotification(''),5000)
       setNewName('')
       setNewNumber('')
     }
@@ -63,12 +67,25 @@ const App = () => {
   }
   const personsToShow = persons.filter(person => person.name.toLowerCase().indexOf(searchWord.toLocaleLowerCase()) !== -1)
   const handleDelete = (id) =>{
-    personService.deletePerson(id)
+    const personDeletedIndex = persons.find(person => person.id === id)
+    const personDeletedName = persons.at(personDeletedIndex).name
+
+    personService
+    .deletePerson(id)
+    .then( () =>{
+      setNotification(`Deleted ${personDeletedName}`)
+      setTimeout(setNotification(''),5000)
+    })
+    .catch(error =>{
+      setNotification(`Information of ${personDeletedName} has already been removed from server`)
+      setTimeout(()=>setNotification(''),5000)
+    })
     setPersons(persons.filter(person => person.id !== id))
   }
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message = {notification}/>
       <Filter handleSearchWordChange={handleSearchWordChange}/>
       <h2>Add a new </h2>
       <PersonForm newName = {newName} newNumber = {newNumber} handleNameChange= {handleNameChange} handleNumberChange = {handleNumberChange} handleFormSubmit = {handleFormSubmit}/>

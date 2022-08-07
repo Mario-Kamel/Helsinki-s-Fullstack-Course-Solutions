@@ -19,6 +19,6 @@ import axios from "axios"
     }
     const deletePerson = (id) =>{
         const request = axios.delete(`${baseURL}/${id}`)
-        
+        return request
     }
     export default {getAll,create,update,deletePerson}

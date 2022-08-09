@@ -89,7 +89,13 @@ app.post('/api/persons',(request,response)=>{
     persons = persons.concat(newPerson)
     response.json(newPerson)
 })
-const PORT = 3001
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+}
+app.use(unknownEndpoint)
+
+const PORT = process.env.PORT || 3001 
 
 app.listen(PORT,()=>{
     console.log(`Server running on ${PORT}`);

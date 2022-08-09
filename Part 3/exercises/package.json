@@ -6,7 +6,11 @@
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build:ui" : "RMDIR /s \"D:/Programming files/React/Part 3/exercises/build\" && cd ../../Part 2/exercises && npm run build && XCOPY /E /H /C /I \"D:/Programming files/React/Part 2/exercises/build\" \"D:/Programming files/React/Part 3/exercises/build  \"",
+    "deploy" : "git push",
+    "deploy:full" : "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
+    "logs:prod" : "heroku logs -t"
   },
   "author": "",
   "license": "ISC",
@@ -18,5 +22,6 @@
     "express": "^4.18.1",
     "heroku": "^7.62.0",
     "morgan": "^1.10.0"
-  }
+  },
+  "proxy" : "http://localhost:3001"
 }

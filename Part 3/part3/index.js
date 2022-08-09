@@ -2,11 +2,13 @@ const express = require('express')
 
 const app = express()
 app.use(express.json())
-
+app.use(express.static('build'))
+const cors = require('cors')
+app.use(cors())
 const requestLogger = (request,response,next) =>{
   console.log('Method:', request.method)
   console.log('Path:  ', request.path)
-  console.log('Body:  ', request.body)
+  console.log('Body:  ', JSON.stringify(request.body))
   console.log('---')
   next()
 }
@@ -58,7 +60,7 @@ let notes = [
 
     response.status(204).end()
   })
-  const PORT = 3001
+ 
 
   const generateId = () => {
     const maxId = notes.length > 0 ? Math.max(...notes.map(n=>n.id)) :0
@@ -90,6 +92,7 @@ let notes = [
   }
 
   app.use(unknownEndpoint)
+  const PORT = process.env.PORT || 3001 
   app.listen(PORT, () =>{
     console.log(`Server running on Port ${PORT}`)
   })

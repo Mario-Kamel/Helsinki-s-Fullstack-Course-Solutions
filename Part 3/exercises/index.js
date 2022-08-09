@@ -1,7 +1,13 @@
 const { request } = require('express')
 const express = require('express')
+
 const app = express()
 app.use(express.json())
+
+const morgan = require('morgan')
+
+
+
 
 let persons = [
     { 
@@ -62,6 +68,9 @@ app.delete('/api/persons/:id',(request,response)=>{
     const maxId = persons.length>0? Math.max(...persons.map(p=>p.id)) : 0
     return maxId +1
 }*/
+morgan.token('body', (req, res) => JSON.stringify(req.body));
+app.use(morgan(':method :url :status :response-time ms - :body'))
+
 app.post('/api/persons',(request,response)=>{
     const body = request.body
     

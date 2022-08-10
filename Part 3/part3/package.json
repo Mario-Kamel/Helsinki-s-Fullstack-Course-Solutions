@@ -7,9 +7,9 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "build:ui" : "rmdir /S build && cd ../../Part 2/part2 && npm run build && xcopy /E /I \"D:/Programming files/React/Part 2/part2/build\" \"D:/Programming files/React/Part 3/part3/build\" ",
-    "deploy" : "git push heroku master",
-    "deploy:full" : "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
+    "build:ui": "rmdir /S build && cd ../../Part 2/part2 && npm run build && xcopy /E /I \"D:/Programming files/React/Part 2/part2/build\" \"D:/Programming files/React/Part 3/part3/build\" ",
+    "deploy": "git push heroku master",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
     "logs:prod": "heroku logs --tail"
   },
   "author": "Mario Kamel",
@@ -17,7 +17,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.1",
-    "heroku": "^7.62.0"
+    "heroku": "^7.62.0",
+    "mongoose": "^6.5.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
